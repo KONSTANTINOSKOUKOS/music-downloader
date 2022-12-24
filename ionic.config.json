@@ -1,0 +1,7 @@
+{
+  "name": "music-downloader",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
