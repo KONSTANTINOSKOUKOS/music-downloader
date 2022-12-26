@@ -13,7 +13,8 @@ import { IonItem, IonLabel } from "@ionic/vue";
 import { defineProps } from "vue";
 const props = defineProps<{
     name: number,
-    artist: number
+    artist: number,
+    id: number
 }>();
 </script>
 

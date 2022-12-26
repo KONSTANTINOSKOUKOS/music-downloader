@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import SearchPage from "@/views/SearchPage.vue";
 import LibraryPage from "@/views/LibraryPage.vue";
 import PlaylistPage from "@/views/PlaylistPage.vue";
+import AlbumPage from '@/views/AlbumPage.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -12,18 +13,23 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/dl',
-    name:'search',
+    name: 'search',
     component: SearchPage
   },
   {
     path: '/library',
-    name:'lib',
-    component: () => import('@/views/LibraryPage.vue')
+    name: 'lib',
+    component: LibraryPage
   },
   {
     path: '/playlist/:id',
-    name:'playlist',
-    component: () => import('@/views/PlaylistPage.vue')
+    name: 'playlist',
+    component: () => PlaylistPage
+  },
+  {
+    path: '/album/:id',
+    name: 'album',
+    component: () => AlbumPage
   }
 ]
 

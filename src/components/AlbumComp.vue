@@ -1,16 +1,15 @@
 <template>
-    <ion-item>
+    <ion-item :button="true">
         <div class="img"></div>
         <ion-label>
-            <h2>Track {{ props.name }}</h2>
+            <h2>Album {{ props.name }}</h2>
             <h3>artist {{ props.artist }}</h3>
         </ion-label>
-        <ion-button fill="clear">🔽</ion-button>
     </ion-item>
 </template>
 
 <script lang="ts" setup>
-import { IonItem, IonLabel, IonButton } from "@ionic/vue";
+import { IonItem, IonLabel } from "@ionic/vue";
 import { defineProps } from "vue";
 const props = defineProps<{
     name: number,

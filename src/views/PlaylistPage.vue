@@ -7,7 +7,7 @@
             </ion-col>
             <hr>
             <ion-list>
-                <TrackCompVue v-for="a in 10" :key="a" :artist="a" :name="a" />
+                <TrackCompVue v-for="a in 10" :key="a" :artist="a" :name="a" :id="a" />
             </ion-list>
         </ion-content>
     </ion-page>

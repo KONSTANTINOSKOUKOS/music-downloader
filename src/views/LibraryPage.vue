@@ -9,13 +9,18 @@
         <ion-chip :class="cat == 'tracks' ? 'selected' : ''" @click="cat = 'tracks'" color="success">Tracks</ion-chip>
         <ion-chip :class="cat == 'playlists' ? 'selected' : ''" @click="cat = 'playlists'"
           color="success">Playlists</ion-chip>
+        <ion-chip :class="cat == 'albums' ? 'selected' : ''" @click="cat = 'albums'" color="success">Albums</ion-chip>
       </ion-row>
       <ion-list>
         <div v-if="cat == 'tracks'">
-          <TrackComp v-for="a in 10" :key="a" :name="a" :artist="a" />
+          <TrackComp v-for="a in 10" :key="a" :name="a" :artist="a" :id="a" />
         </div>
         <div v-else-if="cat == 'playlists'">
-            <PlaylistComp @click="$router.push(`/playlist/${a}`)" v-for="a in 10" :key="a" :name="a" :artist="a" />
+          <PlaylistComp @click="$router.push(`/playlist/${a}`)" v-for="a in 10" :key="a" :name="a" :artist="a"
+            :id="a" />
+        </div>
+        <div v-else-if="cat == 'albums'">
+          <AlbumComp @click="$router.push(`/album/${a}`)" v-for="a in 10" :key="a" :name="a" :artist="a" :id="a" />
         </div>
       </ion-list>
     </ion-content>
@@ -25,6 +30,7 @@
 <script lang="ts" setup>
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
+import AlbumComp from '@/components/AlbumComp.vue';
 import { IonPage, IonContent, IonRow, IonChip, IonList } from '@ionic/vue';
 import { ref } from 'vue';
 
@@ -59,7 +65,8 @@ h1 {
   color: #121212;
   /* color: white; */
 }
-router-link > *{
+
+router-link>* {
   text-decoration: none;
 }
 </style>
