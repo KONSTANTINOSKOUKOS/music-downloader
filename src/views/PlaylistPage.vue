@@ -7,7 +7,7 @@
             </ion-col>
             <hr>
             <ion-list>
-                <TrackCompVue v-for="a in 10" :key="a" :artist="a" :name="a" :id="a" />
+                <TrackComp v-for="a in 10" :key="a" :artist="a" :name="a" :id="a" />
             </ion-list>
         </ion-content>
     </ion-page>
@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { IonCol, IonList, IonPage, IonContent } from "@ionic/vue";
-import TrackCompVue from "@/components/TrackComp.vue";
+import TrackComp from "@/components/TrackComp.vue";
 </script>
 
 <style scoped>

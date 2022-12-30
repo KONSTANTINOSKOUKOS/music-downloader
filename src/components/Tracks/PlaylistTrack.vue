@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import { IonItem, IonLabel } from "@ionic/vue";
 import { defineProps } from "vue";
-import DlButtonComp from "@/components/Tracks/DlButtonComp.vue";
+import DlButtonComp from "./DlButtonComp.vue";
 const props = defineProps<{
     name: number,
     artist: number,

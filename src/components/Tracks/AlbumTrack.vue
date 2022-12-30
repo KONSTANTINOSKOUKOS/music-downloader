@@ -3,7 +3,6 @@
         <div class="img"></div>
         <ion-label>
             <h2>Track {{ props.name }}</h2>
-            <h3>artist {{ props.artist }}</h3>
         </ion-label>
         <DlButtonComp :trackname="props.name" />
     </ion-item>
@@ -11,11 +10,10 @@
 
 <script lang="ts" setup>
 import { IonItem, IonLabel } from "@ionic/vue";
-import { defineProps } from "vue";
 import DlButtonComp from "@/components/Tracks/DlButtonComp.vue";
+import { defineProps } from "vue";
 const props = defineProps<{
     name: number,
-    artist: number,
     id: number
 }>();
 </script>
@@ -33,9 +31,5 @@ ion-label {
 
 ion-button {
     font-size: larger;
-}
-
-h3 {
-    color: rgba(255, 255, 255, .68);
 }
 </style>

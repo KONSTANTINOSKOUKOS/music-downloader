@@ -8,20 +8,15 @@
             </ion-col>
             <hr>
             <ion-list>
-                <ion-item v-for="a in 10" :key="a">
-                    <div class="imgg"></div>
-                    <ion-label>
-                        <h2>Track {{ a }}</h2>
-                    </ion-label>
-                    <ion-button fill="clear">🔽</ion-button>
-                </ion-item>
+                <AlbumTrack v-for="a in 10" :key="a" :name="a" :id="a" />
             </ion-list>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts" setup>
-import { IonCol, IonList, IonPage, IonContent, IonItem, IonLabel, IonButton } from "@ionic/vue";
+import { IonCol, IonList, IonPage, IonContent } from "@ionic/vue";
+import AlbumTrack from "@/components/Tracks/AlbumTrack.vue";
 </script>
 
 <style scoped>
@@ -31,7 +26,7 @@ import { IonCol, IonList, IonPage, IonContent, IonItem, IonLabel, IonButton } fr
     background-color: red;
 }
 
-.imgg{
+.imgg {
     width: 2rem;
     height: 2rem;
     background-color: red;
