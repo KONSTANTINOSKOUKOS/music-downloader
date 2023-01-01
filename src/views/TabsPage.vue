@@ -43,7 +43,8 @@
 </template>
 
 <script lang="ts" setup>
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonPage, IonRouterOutlet, IonIcon } from '@ionic/vue';
+import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonPage, IonRouterOutlet } from '@ionic/vue';
+import { state } from "@/state";
 </script>
 
 <style scoped>

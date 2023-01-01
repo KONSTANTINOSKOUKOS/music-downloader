@@ -4,16 +4,23 @@ import SearchPage from "@/views/SearchPage.vue";
 import LibraryPage from "@/views/LibraryPage.vue";
 import PlaylistPage from "@/views/PlaylistPage.vue";
 import AlbumPage from '@/views/AlbumPage.vue';
+import LoginPage from '@/views/LoginPage.vue';
+import { state } from '@/state';
 
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginPage
+  },
   {
     path: '/',
     redirect: '/dl'
   },
   {
     path: '/dl',
-    name: 'search',
+    name: 'dl',
     component: SearchPage
   },
   {
@@ -36,6 +43,15 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+router.beforeResolve((to, from) => {
+  if (state.token == '') {
+    if (to.name != 'login')//login doesn't need token
+      return '/login';
+  }
+  if (to.name == 'login' && state.token != '') {//when tokeis ok go to /dl
+    return '/dl';
+  }
 })
 
 export default router

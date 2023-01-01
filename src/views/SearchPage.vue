@@ -3,10 +3,10 @@
     <ion-content :fullscreen="true">
       <ion-searchbar color="light" mode="ios" />
       <ion-row>
-        <ion-chip :class="cat == 'tracks' ? 'selected' : ''" @click="cat = 'tracks'" color="success">Tracks</ion-chip>
+        <ion-chip :class="cat == 'tracks' ? 'selected' : ''" @click="cat = 'tracks'" color="light">Tracks</ion-chip>
         <ion-chip :class="cat == 'playlists' ? 'selected' : ''" @click="cat = 'playlists'"
-          color="success">Playlists</ion-chip>
-        <ion-chip :class="cat == 'albums' ? 'selected' : ''" @click="cat = 'albums'" color="success">Albums</ion-chip>
+          color="light">Playlists</ion-chip>
+        <ion-chip :class="cat == 'albums' ? 'selected' : ''" @click="cat = 'albums'" color="light">Albums</ion-chip>
       </ion-row>
       <ion-list lines="none">
         <div v-if="cat == 'tracks'">
@@ -38,6 +38,10 @@ ion-row {
   margin: 1rem 1rem;
   display: flex;
   align-items: center;
+}
+
+ion-chip {
+  --ion-color-light-shade: #ffffff;
 }
 
 .selected {
