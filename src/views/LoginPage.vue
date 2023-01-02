@@ -19,11 +19,12 @@ import { onMounted } from "vue";
 onMounted(async () => {
     const code = router.currentRoute.value.query.code;
     if (code) {
+        console.log(code);
         const res = await axios.get(`https://music-downloader-server.vercel.app/token/${code}`);
         state.token = res.data.token;
         state.refresh = res.data.refresh;
         state.expire = res.data.expire;
-        
+
         //CLOSURE TO ENSURE API IS FASTER THAN state.expire
         (function refresh() {
             setTimeout(async () => {
@@ -34,7 +35,7 @@ onMounted(async () => {
                 refresh();
             }, state.expire * 1000 / 2);
         })();
-        
+
         router.push({ name: 'dl' });
     }
 });
