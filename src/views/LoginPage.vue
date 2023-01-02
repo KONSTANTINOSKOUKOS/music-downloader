@@ -10,16 +10,26 @@
 </template>
 
 <script lang="ts" setup>
+import router from "@/router";
+import { state } from "@/state";
 import { IonPage, IonContent } from "@ionic/vue";
 import axios from "axios";
+import { onMounted } from "vue";
+
+onMounted(async () => {
+    const code = router.currentRoute.value.query.code;
+    if (code) {
+        const res = await axios.get(`https://music-downloader-server.vercel.app/token/${code}`);
+        state.token = res.data.token;
+        state.refresh = res.data.refresh;
+        router.push({name:'dl'})
+    }
+});
 
 const login = async () => {
     console.log('ok');
     const res = await axios.get('https://music-downloader-server.vercel.app/login');
     const win = window.open(res.data, '_self');
-    window.addEventListener('message', (msg) => {
-        console.log(msg.data);
-    });
 }
 </script>
 
