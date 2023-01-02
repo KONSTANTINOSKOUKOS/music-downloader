@@ -22,7 +22,6 @@ onMounted(async () => {
         const res = await axios.get(`https://music-downloader-server.vercel.app/token/${code}`);
         state.token = res.data.token;
         state.refresh = res.data.refresh;
-        console.log(state.token);
         router.push({ name: 'dl' });
     }
 });
