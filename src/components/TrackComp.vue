@@ -1,11 +1,11 @@
 <template>
     <ion-item>
-        <div class="img"></div>
+        <img :src="props.image" alt="">
         <ion-label>
-            <h2>Track {{ props.name }}</h2>
-            <h3>artist {{ props.artist }}</h3>
+            <h2>{{ props.name }}</h2>
+            <h3>{{ props.artist }}</h3>
         </ion-label>
-        <DlButtonComp :trackname="props.name" />
+        <DlButtonComp :trackname="props.name" :id="props.id" />
     </ion-item>
 </template>
 
@@ -14,14 +14,15 @@ import { IonItem, IonLabel } from "@ionic/vue";
 import { defineProps } from "vue";
 import DlButtonComp from "@/components/Tracks/DlButtonComp.vue";
 const props = defineProps<{
-    name: number,
-    artist: number,
-    id: number
+    name: string,
+    artist: string,
+    id: string,
+    image: string
 }>();
 </script>
 
 <style scoped>
-.img {
+img {
     width: 2rem;
     height: 2rem;
     background-color: red;

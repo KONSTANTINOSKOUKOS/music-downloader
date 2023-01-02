@@ -22,6 +22,19 @@ onMounted(async () => {
         const res = await axios.get(`https://music-downloader-server.vercel.app/token/${code}`);
         state.token = res.data.token;
         state.refresh = res.data.refresh;
+        state.expire = res.data.expire;
+        
+        //CLOSURE TO ENSURE API IS FASTER THAN state.expire
+        (function refresh() {
+            setTimeout(async () => {
+                const ress = await axios.get(`https://music-downloader-server.vercel.app/refresh/${state.refresh}`);
+                state.token = ress.data.token;
+                state.refresh = ress.data.refresh;
+                state.expire = res.data.expire;
+                refresh();
+            }, state.expire * 1000 / 2);
+        })();
+        
         router.push({ name: 'dl' });
     }
 });

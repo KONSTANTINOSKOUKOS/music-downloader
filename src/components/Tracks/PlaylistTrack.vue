@@ -5,7 +5,7 @@
             <h2>Track {{ props.name }}</h2>
             <h3>artist {{ props.artist }}</h3>
         </ion-label>
-        <DlButtonComp :trackname="props.name" />
+        <DlButtonComp :trackname="props.name" :id="props.id" />
     </ion-item>
 </template>
 
@@ -14,9 +14,9 @@ import { IonItem, IonLabel } from "@ionic/vue";
 import { defineProps } from "vue";
 import DlButtonComp from "./DlButtonComp.vue";
 const props = defineProps<{
-    name: number,
-    artist: number,
-    id: number
+    name: string,
+    artist: string,
+    id: string
 }>();
 </script>
 
