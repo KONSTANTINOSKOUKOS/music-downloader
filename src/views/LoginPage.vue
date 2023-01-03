@@ -16,10 +16,7 @@ import { IonPage, IonContent } from "@ionic/vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 
-const mounted = ref(false);
-
-onMounted(async () => {
-    if (mounted.value) return;
+onMounted(() => {
     console.log('LoginPage mounted');
     const code = router.currentRoute.value.query.code;
     if (code) {
@@ -30,25 +27,23 @@ onMounted(async () => {
         // state.token = res.data.token;
         // state.refresh = res.data.refresh;
         // state.expire = res.data.expire;
+        (async () => {
+            const res = await axios.post('https://accounts.spotify.com/api/token', {
+                code: code,
+                redirect_uri: 'https://music-downloader-pi.vercel.app/login',
+                grant_type: 'authorization_code'
+            }, {
+                headers: {
+                    'Authorization': `Basic ${btoa(`05b24fb8ffde41c384ac3d5b54f97cf2:55eb2f966f0d401493f46a1c3c7b7ddd`)}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            console.log(res.data.access_token + '\n' + res.data.refresh_token);
 
-        const res = await axios.post('https://accounts.spotify.com/api/token', {
-            code: code,
-            redirect_uri: 'https://music-downloader-pi.vercel.app/login',
-            grant_type: 'authorization_code'
-        }, {
-            headers: {
-                'Authorization': `Basic ${btoa(`05b24fb8ffde41c384ac3d5b54f97cf2:55eb2f966f0d401493f46a1c3c7b7ddd`)}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
-        console.log(res.data.access_token + '\n' + res.data.refresh_token);
-
-        state.token = res.data.token;
-        state.refresh = res.data.refresh;
-        state.expire = res.data.expire;
-
-        console.log(state.token + '\n' + state.refresh);
-
+            state.token = res.data.token;
+            state.refresh = res.data.refresh;
+            state.expire = res.data.expire;
+        })();
 
         //CLOSURE TO ENSURE API IS FASTER THAN state.expire
         // (function refresh() {
@@ -63,7 +58,6 @@ onMounted(async () => {
 
         // router.push({ name: 'dl' });
     }
-    mounted.value = true;
 });
 
 const login = async () => {
