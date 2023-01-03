@@ -19,7 +19,7 @@ import { onMounted } from "vue";
 onMounted(async () => {
     const code = router.currentRoute.value.query.code;
     if (code) {
-        console.log(code);
+        console.log('ok');
         // const res = await axios.get(`https://music-downloader-server.vercel.app/token/${code}`);
         // state.token = res.data.token;
         // state.refresh = res.data.refresh;
@@ -39,7 +39,7 @@ onMounted(async () => {
         state.refresh = res.data.refresh;
         state.expire = res.data.expire;
 
-        console.log(state.token + '\n' + state.refresh);
+        // console.log(state.token + '\n' + state.refresh);
 
 
         //CLOSURE TO ENSURE API IS FASTER THAN state.expire
