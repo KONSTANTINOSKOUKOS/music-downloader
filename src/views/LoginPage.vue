@@ -62,8 +62,7 @@ onMounted(() => {
 
 const login = async () => {
     console.log('redirecting...');
-    const res = await axios.get('https://music-downloader-server.vercel.app/login');
-    const win = window.open(res.data, '_self');
+    window.location.href = 'https://accounts.spotify.com/authorize?response_type=code&client_id=05b24fb8ffde41c384ac3d5b54f97cf2&redirect_uri=https://music-downloader-pi.vercel.app/callback&state=state';
 }
 </script>
 
