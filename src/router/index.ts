@@ -5,6 +5,7 @@ import LibraryPage from "@/views/LibraryPage.vue";
 import PlaylistPage from "@/views/PlaylistPage.vue";
 import AlbumPage from '@/views/AlbumPage.vue';
 import LoginPage from '@/views/LoginPage.vue';
+import CallbackPage from '@/views/CallbackPage.vue';
 import { state } from '@/state';
 
 
@@ -13,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'login',
     component: LoginPage
+  },
+  {
+    path: '/callback',
+    name: 'callback',
+    component: CallbackPage
   },
   {
     path: '/',
