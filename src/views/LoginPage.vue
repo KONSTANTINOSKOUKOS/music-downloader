@@ -62,7 +62,7 @@ onMounted(() => {
 
 const login = async () => {
     console.log('redirecting...');
-    window.location.href = 'https://accounts.spotify.com/authorize?response_type=code&client_id=05b24fb8ffde41c384ac3d5b54f97cf2&redirect_uri=https://music-downloader-pi.vercel.app/callback&state=state';
+    window.location.href = 'https://accounts.spotify.com/authorize?response_type=code&client_id=05b24fb8ffde41c384ac3d5b54f97cf2&scope=playlist-read-private%20user-read-private%20user-library-read&redirect_uri=https://music-downloader-pi.vercel.app/callback&state=state';
 }
 </script>
 
