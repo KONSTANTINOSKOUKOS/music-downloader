@@ -1,7 +1,6 @@
 <template>
   <ion-app class="dark">
-    <ion-router-outlet></ion-router-outlet>
-    <TabsPage v-if="state.token != ''" />
+    <TabsPage />
   </ion-app>
 </template>
 

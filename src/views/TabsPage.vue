@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
+      <ion-tab-bar v-if="state.token != ''" slot="bottom">
         <ion-tab-button tab="search" href="/dl">
           <svg v-if="$route.path == '/dl'" fill="#ffffff" role="img" height="24" width="24" aria-hidden="true"
             class="Svg-sc-ytk21e-0 uPxdw search-active-icon" viewBox="0 0 24 24" data-encore-id="icon">
