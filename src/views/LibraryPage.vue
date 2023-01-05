@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonPage, IonContent, IonRow, IonChip, IonList } from '@ionic/vue';
+import { IonPage, IonContent, IonRow, IonChip, IonList, onIonViewWillEnter } from '@ionic/vue';
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
@@ -39,12 +39,12 @@ import { state } from "@/state";
 import axios from 'axios';
 
 
-onMounted(async () => {
+onIonViewWillEnter(async () => {
   console.log('LibraryPage mounted');
 
-  const user = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/me`)).data;
-  state.user.name = user.name;
-  state.user.image = user.image;
+  // const user = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/me`)).data;
+  // state.user.name = user.name;
+  // state.user.image = user.image;
   const trs = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/usertrs`)).data;
   state.user.tracks = trs;
   const pls = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/userpls`)).data;
