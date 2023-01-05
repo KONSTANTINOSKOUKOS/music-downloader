@@ -44,14 +44,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.beforeResolve((to, from) => {
-  if (state.token == '') {
-    if (to.name != 'login')//login doesn't need token
-      return '/login';
-  }
-  if (to.name == 'login' && state.token != '') {//when tokeis ok go to /dl
-    return '/dl';
-  }
-})
+// router.beforeResolve((to, from) => {
+//   if (state.token == '') {
+//     if (to.name != 'login')//login doesn't need token
+//       return '/login';
+//   }
+//   if (to.name == 'login' && state.token != '') {//when tokeis ok go to /dl
+//     return '/dl';
+//   }
+// });
 
 export default router
