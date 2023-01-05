@@ -29,7 +29,11 @@ import { IonPage, IonContent, IonSearchbar, IonList, IonRow, IonChip } from '@io
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+
+onMounted(() => {
+  console.log('SearchPage mounted');
+});
 
 const cat = ref('tracks');
 </script>

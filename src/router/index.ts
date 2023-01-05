@@ -49,7 +49,7 @@ const router = createRouter({
 //     if (to.name != 'login')//login doesn't need token
 //       return '/login';
 //   }
-//   if (to.name == 'login' && state.token != '') {//when tokeis ok go to /dl
+//   if (to.name == 'login' && state.token != '') {//when token is ok go to /dl
 //     return '/dl';
 //   }
 // });

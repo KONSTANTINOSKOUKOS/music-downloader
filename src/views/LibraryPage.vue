@@ -40,6 +40,8 @@ import axios from 'axios';
 
 
 onMounted(async () => {
+  console.log('LibraryPage mounted');
+
   const user = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/me`)).data;
   state.user.name = user.name;
   state.user.image = user.image;
