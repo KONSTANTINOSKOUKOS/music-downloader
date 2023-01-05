@@ -25,6 +25,9 @@ onMounted(async () => {
         });
         console.log(res + '\n' + res.data.access_token + '\n' + res.data.refresh_token);
 
+        localStorage.setItem('token', res.data.access_token);
+        localStorage.setItem('refresh', res.data.refresh_token);
+
         state.token = res.data.token;
         state.refresh = res.data.refresh;
         state.expire = res.data.expire;
