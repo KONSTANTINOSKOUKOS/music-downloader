@@ -34,7 +34,7 @@ import { IonPage, IonContent, IonRow, IonChip, IonList, onIonViewWillEnter } fro
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { state } from "@/state";
 import axios from 'axios';
 
@@ -42,14 +42,14 @@ import axios from 'axios';
 onIonViewWillEnter(async () => {
   console.log('LibraryPage mounted');
 
-  // const user = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/me`)).data;
-  // state.user.name = user.name;
+  const user = (await axios.get(`https://music-downloader-server.vercel.app/api/me?token=${state.token}`)).data;
+  state.user.name = user.name;
   // state.user.image = user.image;
-  const trs = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/usertrs`)).data;
+  const trs = (await axios.get(`https://music-downloader-server.vercel.app/api/usertrs?token=${state.token}`)).data;
   state.user.tracks = trs;
-  const pls = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/userpls`)).data;
+  const pls = (await axios.get(`https://music-downloader-server.vercel.app/api/userpls?token=${state.token}`)).data;
   state.user.playlists = pls;
-  const als = (await axios.get(`https://music-downloader-server.vercel.app/${state.token}/userals`)).data;
+  const als = (await axios.get(`https://music-downloader-server.vercel.app/api/userals?token=${state.token}`)).data;
   state.user.albums = als;
 });
 const cat = ref('tracks');
