@@ -11,7 +11,8 @@
           color="light">Playlists</ion-chip>
         <ion-chip :class="cat == 'albums' ? 'selected' : ''" @click="cat = 'albums'" color="light">Albums</ion-chip>
       </ion-row>
-      <ion-list lines="none">
+      <ion-spinner v-if="loading" name="crescent"></ion-spinner>
+      <ion-list v-else lines="none">
         <div v-if="cat == 'tracks'">
           <p v-if="state.user.tracks.length == 0">You have no saved tracks in your Spotify account!</p>
           <TrackComp v-else v-for="tr in state.user.tracks" :key="tr.id" :name="tr.name" :artist="tr.artist" :id="tr.id"
@@ -33,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonPage, IonContent, IonRow, IonChip, IonList, onIonViewWillEnter } from '@ionic/vue';
+import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, onIonViewWillEnter } from '@ionic/vue';
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
@@ -41,12 +42,16 @@ import { onMounted, ref } from 'vue';
 import { state } from "@/state";
 import axios from 'axios';
 
+const cat = ref('tracks');
+const loading = ref(true);
+
 onMounted(() => {
   state.token = localStorage.getItem('token') as string;
   state.refresh = localStorage.getItem('refresh') as string;
 });
 
 onIonViewWillEnter(async () => {
+  loading.value = true;
   console.log('LibraryPage mounted');
 
   const user = (await axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`)).data;
@@ -58,8 +63,9 @@ onIonViewWillEnter(async () => {
   state.user.playlists = pls.pls;
   const als = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userals?token=${state.token}`)).data;
   state.user.albums = als.als;
+
+  loading.value = false;
 });
-const cat = ref('tracks');
 </script>
 
 <style scoped>
@@ -87,5 +93,12 @@ ion-chip {
   background-color: #2dd36f;
   color: #121212;
   /* color: white; */
+}
+
+ion-spinner {
+  width: 4rem;
+  height: 4rem;
+  margin-left: 40vw;
+  margin-top: 30vh;
 }
 </style>
