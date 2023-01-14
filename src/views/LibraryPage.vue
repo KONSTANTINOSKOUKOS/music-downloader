@@ -47,7 +47,7 @@ onIonViewWillEnter(async () => {
 
   const user = (await axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`)).data;
   state.user.name = user.name;
-  state.user.image = user.image;
+  state.user.image = user.image ? user.image : '';
   const trs = (await axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`)).data;
   state.user.tracks = trs.trs;
   const pls = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userpls?token=${state.token}`)).data;

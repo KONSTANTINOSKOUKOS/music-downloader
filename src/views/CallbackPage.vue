@@ -1,7 +1,8 @@
 <template>
     <h1>{{ state.token }}</h1>
 </template>
-<script lang="ts" setup>import router from '@/router';
+<script lang="ts" setup>
+import router from '@/router';
 import { state } from '@/state';
 import axios from 'axios';
 import { onMounted } from 'vue';
@@ -32,6 +33,8 @@ onMounted(async () => {
         state.token = res.data.token;
         state.refresh = res.data.refresh;
         state.expire = res.data.expire;
+
+        router.push('/library');
     }
 });
 </script>

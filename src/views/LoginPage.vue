@@ -17,6 +17,8 @@ import axios from "axios";
 import { onMounted, ref } from "vue";
 
 onMounted(() => {
+    if (state.token != '')
+        return router.push('/library');
     state.token = '';
     state.refresh = '';
     console.log('LoginPage mounted');
