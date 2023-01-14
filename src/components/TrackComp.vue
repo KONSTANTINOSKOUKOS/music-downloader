@@ -23,13 +23,13 @@ const props = defineProps<{
 
 <style scoped>
 img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     background-color: red;
 }
 
 ion-label {
-    margin-left: 15%;
+    margin-left: 10%;
 }
 
 ion-button {

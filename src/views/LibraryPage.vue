@@ -21,8 +21,8 @@
             :name="pl.name" :artist="pl.owner" :id="pl.id" :image="pl.image" />
         </div>
         <div v-else-if="cat == 'albums'">
-          <AlbumComp @click="$router.push(`/album/${al.id}`)" v-for="al in state.user.playlists" :key="al.id"
-            :name="al.name" :artist="al.owner" :id="al.id" :image="al.image" />
+          <AlbumComp @click="$router.push(`/album/${al.id}`)" v-for="al in state.user.albums" :key="al.id"
+            :name="al.name" :artist="al.artist" :id="al.id" :image="al.image" />
         </div>
       </ion-list>
     </ion-content>
