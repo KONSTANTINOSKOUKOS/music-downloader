@@ -42,14 +42,14 @@ import axios from 'axios';
 onIonViewWillEnter(async () => {
   console.log('LibraryPage mounted');
 
-  const user = (await axios.get(`https://music-downloader-server.vercel.app/api/me?token=${state.token}`)).data;
-  state.user.name = user.name;
+  // const user = (await axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`)).data;
+  // state.user.name = user.name;
   // state.user.image = user.image;
-  const trs = (await axios.get(`https://music-downloader-server.vercel.app/api/usertrs?token=${state.token}`)).data;
+  const trs = (await axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`)).data;
   state.user.tracks = trs;
-  const pls = (await axios.get(`https://music-downloader-server.vercel.app/api/userpls?token=${state.token}`)).data;
+  const pls = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userpls?token=${state.token}`)).data;
   state.user.playlists = pls;
-  const als = (await axios.get(`https://music-downloader-server.vercel.app/api/userals?token=${state.token}`)).data;
+  const als = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userals?token=${state.token}`)).data;
   state.user.albums = als;
 });
 const cat = ref('tracks');
