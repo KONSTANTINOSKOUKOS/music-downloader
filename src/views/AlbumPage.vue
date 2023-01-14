@@ -17,6 +17,13 @@
 <script lang="ts" setup>
 import { IonCol, IonList, IonPage, IonContent } from "@ionic/vue";
 import AlbumTrack from "@/components/Tracks/AlbumTrack.vue";
+import { onMounted } from "vue";
+import { state } from "@/state";
+
+onMounted(() => {
+  state.token = localStorage.getItem('token') as string;
+  state.refresh = localStorage.getItem('refresh') as string;
+});
 </script>
 
 <style scoped>

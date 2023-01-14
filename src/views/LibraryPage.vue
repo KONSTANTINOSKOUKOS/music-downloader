@@ -37,10 +37,14 @@ import { IonPage, IonContent, IonRow, IonChip, IonList, onIonViewWillEnter } fro
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { state } from "@/state";
 import axios from 'axios';
 
+onMounted(() => {
+  state.token = localStorage.getItem('token') as string;
+  state.refresh = localStorage.getItem('refresh') as string;
+});
 
 onIonViewWillEnter(async () => {
   console.log('LibraryPage mounted');

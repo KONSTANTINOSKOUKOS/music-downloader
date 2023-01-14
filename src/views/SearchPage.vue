@@ -30,9 +30,12 @@ import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
 import { onMounted, ref } from "vue";
+import { state } from '@/state';
 
 onMounted(() => {
   console.log('SearchPage mounted');
+  state.token = localStorage.getItem('token') as string;
+  state.refresh = localStorage.getItem('refresh') as string;
 });
 
 const cat = ref('tracks');

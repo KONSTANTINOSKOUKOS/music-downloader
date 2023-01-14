@@ -16,6 +16,13 @@
 <script lang="ts" setup>
 import { IonCol, IonList, IonPage, IonContent } from "@ionic/vue";
 import TrackComp from "@/components/TrackComp.vue";
+import { onMounted } from "vue";
+import { state } from "@/state";
+
+onMounted(() => {
+  state.token = localStorage.getItem('token') as string;
+  state.refresh = localStorage.getItem('refresh') as string;
+});
 </script>
 
 <style scoped>
