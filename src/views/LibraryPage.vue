@@ -42,15 +42,15 @@ import axios from 'axios';
 onIonViewWillEnter(async () => {
   console.log('LibraryPage mounted');
 
-  // const user = (await axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`)).data;
-  // state.user.name = user.name;
-  // state.user.image = user.image;
+  const user = (await axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`)).data;
+  state.user.name = user.name;
+  state.user.image = user.image;
   const trs = (await axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`)).data;
-  state.user.tracks = trs;
+  state.user.tracks = trs.trs;
   const pls = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userpls?token=${state.token}`)).data;
-  state.user.playlists = pls;
+  state.user.playlists = pls.pls;
   const als = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userals?token=${state.token}`)).data;
-  state.user.albums = als;
+  state.user.albums = als.als;
 });
 const cat = ref('tracks');
 </script>
