@@ -1,6 +1,6 @@
 import { reactive } from "vue";
 
-interface Track {
+export interface Track {
     name: string,
     duration: number,
     id: string,
@@ -8,7 +8,7 @@ interface Track {
     image: string
 }
 
-interface Playlist {
+export interface Playlist {
     name: string,
     id: string,
     owner: string,
@@ -16,12 +16,18 @@ interface Playlist {
     image: string
 }
 
-interface Album {
+export interface Album {
     name: string,
     id: string,
     artist: string,
     tracks: { name: string, duration: number, id: string, artist: string }[],
     image: string
+}
+
+export interface Search {
+    tracks: Track[],
+    playlists: Playlist[],
+    albums: Album[]
 }
 
 export const state = reactive({

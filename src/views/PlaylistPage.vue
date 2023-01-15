@@ -1,32 +1,55 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <ion-col>
-                <div class="img"></div>
-                <h1>Playlist {{ $route.params.id }}</h1>
-            </ion-col>
-            <hr>
-            <ion-list>
-                <TrackComp v-for="a in 10" :key="a" :artist="a" :name="a" :id="a" />
-            </ion-list>
+            <ion-spinner v-if="loading" name="crescent"></ion-spinner>
+            <div v-else>
+                <ion-col>
+                    <img :src="data.image">
+                    <h1>{{ data.name }}</h1>
+                    <h3>{{ data.owner }}</h3>
+                </ion-col>
+                <hr>
+                <ion-list>
+                    <TrackComp v-for="tr in data.tracks" :key="tr.id" :artist="tr.artist" :name="tr.name" :id="tr.id"
+                        :image="tr.image" />
+                </ion-list>
+            </div>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts" setup>
-import { IonCol, IonList, IonPage, IonContent } from "@ionic/vue";
+import { IonCol, IonList, IonPage, IonContent, IonSpinner } from "@ionic/vue";
 import TrackComp from "@/components/TrackComp.vue";
-import { onMounted } from "vue";
-import { state } from "@/state";
+import { onMounted, ref } from "vue";
+import { Playlist, state } from "@/state";
+import router from "@/router";
+import axios from "axios";
 
-onMounted(() => {
-  state.token = localStorage.getItem('token') as string;
-  state.refresh = localStorage.getItem('refresh') as string;
+const loading = ref(true);
+const data = ref<Playlist>({} as Playlist);
+
+onMounted(async () => {
+    state.token = localStorage.getItem('token') as string;
+    state.refresh = localStorage.getItem('refresh') as string;
+
+    loading.value = true;
+    data.value = (await axios.get(`https://music-downloader-vercel.vercel.app/api/playlist?id=${router.currentRoute.value.params.id}&token=${state.token}`)).data;
+    loading.value = false;
 });
 </script>
 
 <style scoped>
-.img {
+ion-spinner {
+    width: 4rem;
+    height: 4rem;
+    margin-top: calc((100vh - 8rem) / 2);
+    margin-bottom: calc((100vh - 8rem) / 2);
+    margin-left: calc((100vw - 8rem) / 2);
+    margin-right: calc((100vw - 8rem) / 2);
+}
+
+img {
     width: 7rem;
     height: 7rem;
     background-color: red;
@@ -42,5 +65,9 @@ ion-col {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+h3 {
+    color: rgba(255, 255, 255, .68);
 }
 </style>

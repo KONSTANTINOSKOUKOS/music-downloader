@@ -1,42 +1,56 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <ion-col>
-                <div class="img"></div>
-                <h1>Album {{ $route.params.id }}</h1>
-                <h3>Artist</h3>
-            </ion-col>
-            <hr>
-            <ion-list>
-                <AlbumTrack v-for="a in 10" :key="a" :name="a" :id="a" />
-            </ion-list>
+            <ion-spinner v-if="loading" name="crescent"></ion-spinner>
+            <div v-else>
+                <ion-col>
+                    <img :src="data.image" />
+                    <h1>{{ data.name }}</h1>
+                    <h3>{{ data.artist }}</h3>
+                </ion-col>
+                <hr>
+                <ion-list>
+                    <AlbumTrack v-for="tr in data.tracks" :key="tr.id" :name="tr.name" :id="tr.id" />
+                </ion-list>
+            </div>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts" setup>
-import { IonCol, IonList, IonPage, IonContent } from "@ionic/vue";
+import { IonCol, IonList, IonPage, IonContent, IonSpinner } from "@ionic/vue";
 import AlbumTrack from "@/components/Tracks/AlbumTrack.vue";
-import { onMounted } from "vue";
-import { state } from "@/state";
+import { onMounted, ref } from "vue";
+import { state, Album } from "@/state";
+import axios from "axios";
+import router from "@/router";
 
-onMounted(() => {
-  state.token = localStorage.getItem('token') as string;
-  state.refresh = localStorage.getItem('refresh') as string;
+const data = ref<Album>({} as Album);
+const loading = ref(true);
+
+onMounted(async () => {
+    state.token = localStorage.getItem('token') as string;
+    state.refresh = localStorage.getItem('refresh') as string;
+
+    loading.value = true;
+    data.value = (await axios(`https://music-downloader-vercel.vercel.app/api/album?id=${router.currentRoute.value.params.id}&token=${state.token}`)).data;
+    loading.value = false;
 });
 </script>
 
 <style scoped>
-.img {
-    width: 7rem;
-    height: 7rem;
-    background-color: red;
+ion-spinner {
+    width: 4rem;
+    height: 4rem;
+    margin-top: calc((100vh - 8rem) / 2);
+    margin-bottom: calc((100vh - 8rem) / 2);
+    margin-left: calc((100vw - 8rem) / 2);
+    margin-right: calc((100vw - 8rem) / 2);
 }
 
-.imgg {
-    width: 2rem;
-    height: 2rem;
-    background-color: red;
+img {
+    width: 7rem;
+    height: 7rem;
 }
 
 ion-label {

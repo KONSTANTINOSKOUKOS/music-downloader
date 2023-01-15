@@ -1,46 +1,79 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ion-searchbar color="light" mode="ios" />
-      <ion-row>
-        <ion-chip :class="cat == 'tracks' ? 'selected' : ''" @click="cat = 'tracks'" color="light">Tracks</ion-chip>
-        <ion-chip :class="cat == 'playlists' ? 'selected' : ''" @click="cat = 'playlists'"
-          color="light">Playlists</ion-chip>
-        <ion-chip :class="cat == 'albums' ? 'selected' : ''" @click="cat = 'albums'" color="light">Albums</ion-chip>
-      </ion-row>
-      <ion-list lines="none">
-        <div v-if="cat == 'tracks'">
-          <TrackComp v-for="a in 10" :key="a" :name="a" :artist="a" :id="a" />
-        </div>
-        <div v-else-if="cat == 'playlists'">
-          <PlaylistComp @click="$router.push(`/playlist/${a}`)" v-for="a in 10" :key="a" :name="a" :artist="a"
-            :id="a" />
-        </div>
-        <div v-else-if="cat == 'albums'">
-          <AlbumComp @click="$router.push(`/album/${a}`)" v-for="a in 10" :key="a" :name="a" :artist="a" :id="a" />
-        </div>
-      </ion-list>
+      <form @submit.prevent="search">
+        <ion-searchbar @ion-change="termchange" show-clear-button="focus" :value="term" color="light" mode="ios" />
+      </form>
+      <ion-spinner v-if="loading"></ion-spinner>
+      <div v-else>
+        <ion-row>
+          <ion-chip :class="cat == 'tracks' ? 'selected' : ''" @click="cat = 'tracks'" color="light">Tracks</ion-chip>
+          <ion-chip :class="cat == 'playlists' ? 'selected' : ''" @click="cat = 'playlists'"
+            color="light">Playlists</ion-chip>
+          <ion-chip :class="cat == 'albums' ? 'selected' : ''" @click="cat = 'albums'" color="light">Albums</ion-chip>
+        </ion-row>
+        <ion-list lines="none">
+          <div v-if="cat == 'tracks'">
+            <TrackComp v-for="tr in data.tracks" :key="tr.id" :name="tr.name" :artist="tr.artist" :id="tr.id"
+              :image="tr.image" />
+          </div>
+          <div v-else-if="cat == 'playlists'">
+            <PlaylistComp @click="$router.push(`/playlist/${pl.id}`)" v-for="pl in data.playlists" :key="pl.id"
+              :name="pl.name" :artist="pl.owner" :id="pl.id" :image="pl.image" />
+          </div>
+          <div v-else-if="cat == 'albums'">
+            <AlbumComp @click="$router.push(`/album/${al.id}`)" v-for="al in data.albums" :key="al.id" :name="al.name"
+              :artist="al.artist" :id="al.id" :image="al.image" />
+          </div>
+        </ion-list>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-import { IonPage, IonContent, IonSearchbar, IonList, IonRow, IonChip } from '@ionic/vue';
+import { IonPage, IonContent, IonSearchbar, IonList, IonRow, IonChip, IonSpinner } from '@ionic/vue';
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
 import { onMounted, ref } from "vue";
-import { state } from '@/state';
+import { state, Search } from '@/state';
+import axios from 'axios';
+import { IonSearchbarCustomEvent } from '@ionic/core';
+
+const loading = ref(false);
+const term = ref('');
+const data = ref<Search>({} as Search);
 
 onMounted(() => {
   console.log('SearchPage mounted');
   state.token = localStorage.getItem('token') as string;
   state.refresh = localStorage.getItem('refresh') as string;
 });
-
 const cat = ref('tracks');
+
+const search = async () => {
+  loading.value = true;
+  const str = encodeURI(term.value);
+  data.value = (await axios.get(`https://music-downloader-vercel.vercel.app/api/search?term=${str}&token=${state.token}`)).data;
+  loading.value = false;
+}
+
+const termchange = (e: any) => {
+  term.value = e.target.value;
+}
+
 </script>
 <style scoped>
+ion-spinner {
+  width: 4rem;
+  height: 4rem;
+  margin-top: calc((100vh - 8rem) / 2);
+  margin-bottom: calc((100vh - 8rem) / 2);
+  margin-left: calc((100vw - 8rem) / 2);
+  margin-right: calc((100vw - 8rem) / 2);
+}
+
 ion-row {
   margin: 1rem 1rem;
   display: flex;
