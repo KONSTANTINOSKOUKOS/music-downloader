@@ -53,12 +53,14 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   if (state.token == '') {
     if (to.name != 'login' && to.name != 'callback')//login doesn't need token
-      return '/login';
+      console.log('no token');
+
+    return '/login';
   }
   if ((to.name == 'login' || to.name == 'callback') && state.token != '') {//when token is ok go to /dl
     return '/dl';
   }
-  return true;
+  if (to.path.includes('/playlist') || to.path.includes('/album')) console.log('album/playlist nav');
 });
 
 router.afterEach((to, from) => {
