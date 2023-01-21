@@ -52,10 +52,10 @@ const router = createRouter({
 })
 router.beforeEach((to, from) => {
   if (state.token == '') {
-    if (to.name != 'login' && to.name != 'callback')//login doesn't need token
+    if (to.name != 'login' && to.name != 'callback') {//login doesn't need token
       console.log('no token');
-
-    return '/login';
+      return '/login';
+    }
   }
   if ((to.name == 'login' || to.name == 'callback') && state.token != '') {//when token is ok go to /dl
     return '/dl';
