@@ -50,7 +50,7 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.beforeResolve((to, from) => {
+router.beforeResolve((to, from, next) => {
  if (state.token == '') {
    if (to.name != 'login' && to.name != 'callback')//login doesn't need token
      return '/login';

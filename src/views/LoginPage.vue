@@ -13,14 +13,14 @@
 import router from "@/router";
 import { state } from "@/state";
 import { IonPage, IonContent } from "@ionic/vue";
-import axios from "axios";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 
 onMounted(() => {
     if (state.token != '')
         return router.push('/library');
     state.token = '';
     state.refresh = '';
+    localStorage.clear();
     console.log('LoginPage mounted');
 });
 
