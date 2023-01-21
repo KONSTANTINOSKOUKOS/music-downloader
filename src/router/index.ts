@@ -35,12 +35,12 @@ const routes: Array<RouteRecordRaw> = [
     component: LibraryPage
   },
   {
-    path: '/playlist/:id',
+    path: '/playlist',
     name: 'playlist',
     component: () => PlaylistPage
   },
   {
-    path: '/album/:id',
+    path: '/album',
     name: 'album',
     component: () => AlbumPage
   }

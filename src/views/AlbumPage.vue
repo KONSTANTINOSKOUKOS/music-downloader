@@ -33,7 +33,7 @@ onMounted(async () => {
     state.refresh = localStorage.getItem('refresh') as string;
 
     loading.value = true;
-    data.value = (await axios(`https://music-downloader-vercel.vercel.app/api/album?id=${router.currentRoute.value.params.id}&token=${state.token}`)).data;
+    data.value = (await axios(`https://music-downloader-vercel.vercel.app/api/album?id=${router.currentRoute.value.query.id}&token=${state.token}`)).data;
     loading.value = false;
 });
 </script>
