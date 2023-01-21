@@ -50,7 +50,7 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.beforeResolve((to, from) => {
+router.beforeEach((to, from) => {
   if (state.token == '') {
     if (to.name != 'login' && to.name != 'callback')//login doesn't need token
       return '/login';
@@ -58,7 +58,7 @@ router.beforeResolve((to, from) => {
   if ((to.name == 'login' || to.name == 'callback') && state.token != '') {//when token is ok go to /dl
     return '/dl';
   }
-  return to.path;
+  return true;
 });
 
 router.afterEach((to, from) => {
