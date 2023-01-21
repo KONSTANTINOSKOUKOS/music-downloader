@@ -60,7 +60,7 @@ router.beforeEach((to, from) => {
   if ((to.name == 'login' || to.name == 'callback') && state.token != '') {//when token is ok go to /dl
     return '/dl';
   }
-  if (to.path.includes('/playlist') || to.path.includes('/album')) console.log('album/playlist nav');
+  if (to.path.includes('/playlist') || to.path.includes('/album')) console.log('album/playlist nav ' + to.fullPath);
 });
 
 router.afterEach((to, from) => {
