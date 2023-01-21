@@ -37,6 +37,8 @@
           </svg>
           <ion-label>Library</ion-label>
         </ion-tab-button>
+        <ion-tab-button style="display: none;" tab="playlist" href="/playlist"></ion-tab-button>
+        <ion-tab-button style="display: none;" tab="album" href="/album"></ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
