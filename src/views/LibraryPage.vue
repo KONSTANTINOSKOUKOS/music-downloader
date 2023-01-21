@@ -20,12 +20,12 @@
         </div>
         <div v-else-if="cat == 'playlists'">
           <p v-if="state.user.playlists.length == 0">You have no saved playlists in your Spotify account!</p>
-          <PlaylistComp v-else @click="$router.push(`/playlist/${pl.id}`)" v-for="pl in state.user.playlists"
+          <PlaylistComp v-else @click="nav(`/playlist/${pl.id}`)" v-for="pl in state.user.playlists"
             :key="pl.id" :name="pl.name" :artist="pl.owner" :id="pl.id" :image="pl.image" />
         </div>
         <div v-else-if="cat == 'albums'">
           <p v-if="state.user.albums.length == 0">You have no saved albums in your Spotify account!</p>
-          <AlbumComp v-else @click="$router.push(`/album/${al.id}`)" v-for="al in state.user.albums" :key="al.id"
+          <AlbumComp v-else @click="nav(`/album/${al.id}`)" v-for="al in state.user.albums" :key="al.id"
             :name="al.name" :artist="al.artist" :id="al.id" :image="al.image" />
         </div>
       </ion-list>
@@ -41,6 +41,7 @@ import AlbumComp from '@/components/AlbumComp.vue';
 import { onMounted, ref } from 'vue';
 import { state } from "@/state";
 import axios from 'axios';
+import router from '@/router';
 
 const cat = ref('tracks');
 const loading = ref(true);
@@ -66,6 +67,10 @@ onIonViewWillEnter(async () => {
 
   loading.value = false;
 });
+
+const nav = (url: string) => {
+  router.push(url);
+}
 </script>
 
 <style scoped>
