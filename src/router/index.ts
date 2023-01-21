@@ -51,13 +51,14 @@ const router = createRouter({
   routes
 })
 router.beforeResolve((to, from) => {
- if (state.token == '') {
-   if (to.name != 'login' && to.name != 'callback')//login doesn't need token
-     return '/login';
- }
- if ((to.name == 'login' || to.name == 'callback') && state.token != '') {//when token is ok go to /dl
-   return '/dl';
- }
+  if (state.token == '') {
+    if (to.name != 'login' && to.name != 'callback')//login doesn't need token
+      return '/login';
+  }
+  if ((to.name == 'login' || to.name == 'callback') && state.token != '') {//when token is ok go to /dl
+    return '/dl';
+  }
+  return to.path;
 });
 
 router.afterEach((to, from) => {
