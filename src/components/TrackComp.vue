@@ -1,5 +1,5 @@
 <template>
-    <ion-item @click="" button="true">
+    <ion-item button="true">
         <svg v-if="playing" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff"
             viewBox="0 0 16 16">
             <path
