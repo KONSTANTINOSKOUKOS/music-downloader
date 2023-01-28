@@ -37,12 +37,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/playlist',
     name: 'playlist',
-    component: () => PlaylistPage
+    component: PlaylistPage
   },
   {
     path: '/album',
     name: 'album',
-    component: () => AlbumPage
+    component: AlbumPage
   }
 ]
 
@@ -50,20 +50,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   if (state.token == '') {
     if (to.name != 'login' && to.name != 'callback') {//login doesn't need token
-      console.log('no token');
       return '/login';
     }
   }
-  if ((to.name == 'login' || to.name == 'callback') && state.token != '') {//when token is ok go to /dl
-    return '/dl';
-  }
-  if (to.path.includes('/playlist') || to.path.includes('/album')) console.log('album/playlist nav ' + to.fullPath);
 });
 
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   if (to.name == 'login' || to.name == 'callback') return;
   state.token = localStorage.getItem('token') as string;
   state.refresh = localStorage.getItem('refresh') as string;

@@ -18,12 +18,6 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-.img {
-    width: 2rem;
-    height: 2rem;
-    background-color: red;
-}
-
 ion-button {
     font-size: larger;
 }

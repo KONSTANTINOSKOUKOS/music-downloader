@@ -9,7 +9,7 @@
                     <h3>{{ data.owner }}</h3>
                 </ion-col>
                 <hr>
-                <ion-list>
+                <ion-list lines="none">
                     <TrackComp v-for="tr in data.tracks" :key="tr.id" :artist="tr.artist" :name="tr.name" :id="tr.id"
                         :image="tr.image" />
                 </ion-list>
@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts" setup>
-import { IonCol, IonList, IonPage, IonContent, IonSpinner } from "@ionic/vue";
+import { IonCol, IonList, IonPage, IonContent, IonSpinner, onIonViewWillEnter } from "@ionic/vue";
 import TrackComp from "@/components/TrackComp.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { Playlist, state } from "@/state";
 import router from "@/router";
 import axios from "axios";
@@ -29,7 +29,7 @@ import axios from "axios";
 const loading = ref(true);
 const data = ref<Playlist>({} as Playlist);
 
-onMounted(async () => {
+onIonViewWillEnter(async () => {
     state.token = localStorage.getItem('token') as string;
     state.refresh = localStorage.getItem('refresh') as string;
 

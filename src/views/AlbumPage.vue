@@ -9,7 +9,7 @@
                     <h3>{{ data.artist }}</h3>
                 </ion-col>
                 <hr>
-                <ion-list>
+                <ion-list lines="none">
                     <AlbumTrack v-for="tr in data.tracks" :key="tr.id" :name="tr.name" :id="tr.id" />
                 </ion-list>
             </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonCol, IonList, IonPage, IonContent, IonSpinner } from "@ionic/vue";
+import { IonCol, IonList, IonPage, IonContent, IonSpinner, onIonViewWillEnter } from "@ionic/vue";
 import AlbumTrack from "@/components/Tracks/AlbumTrack.vue";
 import { onMounted, ref } from "vue";
 import { state, Album } from "@/state";
@@ -28,7 +28,7 @@ import router from "@/router";
 const data = ref<Album>({} as Album);
 const loading = ref(true);
 
-onMounted(async () => {
+onIonViewWillEnter(async () => {
     state.token = localStorage.getItem('token') as string;
     state.refresh = localStorage.getItem('refresh') as string;
 

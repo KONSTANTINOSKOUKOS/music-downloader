@@ -18,12 +18,12 @@
               :image="tr.image" />
           </div>
           <div v-else-if="cat == 'playlists'">
-            <PlaylistComp @click="$router.push(`/playlist/${pl.id}`)" v-for="pl in data.playlists" :key="pl.id"
+            <PlaylistComp @click="$router.push(`/playlist/?id=${pl.id}`)" v-for="pl in data.playlists" :key="pl.id"
               :name="pl.name" :artist="pl.owner" :id="pl.id" :image="pl.image" />
           </div>
           <div v-else-if="cat == 'albums'">
-            <AlbumComp @click="$router.push(`/album/${al.id}`)" v-for="al in data.albums" :key="al.id" :name="al.name"
-              :artist="al.artist" :id="al.id" :image="al.image" />
+            <AlbumComp @click="$router.push(`/album/?id=${al.id}`)" v-for="al in data.albums" :key="al.id"
+              :name="al.name" :artist="al.artist" :id="al.id" :image="al.image" />
           </div>
         </ion-list>
       </div>
@@ -39,7 +39,6 @@ import AlbumComp from '@/components/AlbumComp.vue';
 import { onMounted, ref } from "vue";
 import { state, Search } from '@/state';
 import axios from 'axios';
-import { IonSearchbarCustomEvent } from '@ionic/core';
 
 const loading = ref(false);
 const term = ref('');
@@ -53,6 +52,7 @@ onMounted(() => {
 const cat = ref('tracks');
 
 const search = async () => {
+  if (term.value == '') return;
   loading.value = true;
   const str = encodeURI(term.value);
   data.value = (await axios.get(`https://music-downloader-vercel.vercel.app/api/search?term=${str}&token=${state.token}`)).data;

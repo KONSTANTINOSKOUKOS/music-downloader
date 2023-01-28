@@ -16,7 +16,7 @@ onMounted(async () => {
 
         const res = await axios.post('https://accounts.spotify.com/api/token', {
             code: code,
-            redirect_uri: 'https://music-downloader-pi.vercel.app/callback',
+            redirect_uri: window.location.origin + '/callback',
             grant_type: 'authorization_code',
             client_id: '05b24fb8ffde41c384ac3d5b54f97cf2',
             code_verifier: localStorage.getItem('codeverifier')

@@ -1,7 +1,7 @@
 <template>
     <ion-item>
         <img :src="props.image" alt="">
-        <ion-label>
+        <ion-label text-wrap>
             <h2>{{ props.name }}</h2>
             <h3>{{ props.artist }}</h3>
         </ion-label>
@@ -23,8 +23,8 @@ const props = defineProps<{
 
 <style scoped>
 img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
 }
 
 ion-label {
