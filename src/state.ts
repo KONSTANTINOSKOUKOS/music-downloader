@@ -5,7 +5,8 @@ export interface Track {
     duration: number,
     id: string,
     artist: string,
-    image: string
+    image: string,
+    preview: string
 }
 
 export interface Playlist {
@@ -20,7 +21,7 @@ export interface Album {
     name: string,
     id: string,
     artist: string,
-    tracks: { name: string, duration: number, id: string, artist: string }[],
+    tracks: { name: string, duration: number, id: string, artist: string, preview: string }[],
     image: string
 }
 
