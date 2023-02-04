@@ -19,3 +19,5 @@ App.addListener('appUrlOpen', e => {
   }
 });
 </script>
+<style scoped>
+</style>

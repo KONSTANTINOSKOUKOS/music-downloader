@@ -6,7 +6,6 @@ export interface Track {
     id: string,
     artist: string,
     image: string,
-    preview: string
 }
 
 export interface Playlist {
@@ -41,5 +40,7 @@ export const state = reactive({
         tracks: [] as Track[],
         playlists: [] as Playlist[],
         albums: [] as Album[]
-    }
+    },
+    track: {} as Track,
+    url: ''
 });

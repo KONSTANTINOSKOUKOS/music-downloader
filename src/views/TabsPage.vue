@@ -2,6 +2,7 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
+      <MiniPlayer />
       <ion-tab-bar v-if="state.token != ''" slot="bottom">
         <ion-tab-button tab="search" href="/dl">
           <svg v-if="$route.path == '/dl'" fill="#ffffff" role="img" height="24" width="24" aria-hidden="true"
@@ -47,9 +48,14 @@
 <script lang="ts" setup>
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { state } from "@/state";
+import MiniPlayer from '@/components/MiniPlayer.vue';
 </script>
 
 <style scoped>
+ion-tabs {
+  background-color: transparent;
+}
+
 ion-tab-button {
   --color: rbga(255, 255, 255, .40);
   --color-selected: white;
