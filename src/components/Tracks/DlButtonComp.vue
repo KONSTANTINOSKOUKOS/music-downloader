@@ -1,5 +1,5 @@
 <template>
-    <ion-button @click="dlbutton" fill="clear">
+    <ion-button @click.stop="dlbutton" fill="clear">
         <svg v-if="!loading" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff"
             class="bi bi-download" viewBox="0 0 16 16">
             <path

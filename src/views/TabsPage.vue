@@ -1,8 +1,8 @@
 <template>
   <ion-page>
     <ion-tabs>
+      <MiniPlayer v-if="state.track.id" />
       <ion-router-outlet></ion-router-outlet>
-      <MiniPlayer />
       <ion-tab-bar v-if="state.token != ''" slot="bottom">
         <ion-tab-button tab="search" href="/dl">
           <svg v-if="$route.path == '/dl'" fill="#ffffff" role="img" height="24" width="24" aria-hidden="true"
@@ -38,8 +38,8 @@
           </svg>
           <ion-label>Library</ion-label>
         </ion-tab-button>
-        <ion-tab-button style="display: none;" tab="playlist" href="/playlist"></ion-tab-button>
-        <ion-tab-button style="display: none;" tab="album" href="/album"></ion-tab-button>
+        <!-- <ion-tab-button style="display: none;" tab="playlist" href="/playlist"></ion-tab-button>
+        <ion-tab-button style="display: none;" tab="album" href="/album"></ion-tab-button> -->
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>

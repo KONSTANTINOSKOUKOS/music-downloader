@@ -1,11 +1,6 @@
 <template>
-    <ion-item button="true">
-        <svg v-if="playing" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff"
-            viewBox="0 0 16 16">
-            <path
-                d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
-        </svg>
-        <img class="track-img" :src="props.image">
+    <ion-item @click="play" :button="true">
+        <img :src="props.image">
         <ion-label text-wrap>
             <h2>{{ props.name }}</h2>
             <h3>{{ props.artist }}</h3>
@@ -18,6 +13,8 @@
 import { IonItem, IonLabel } from "@ionic/vue";
 import { defineProps, ref } from "vue";
 import DlButtonComp from "@/components/Tracks/DlButtonComp.vue";
+import axios from "axios";
+import { state } from "@/state";
 const props = defineProps<{
     name: string,
     artist: string,
@@ -27,8 +24,13 @@ const props = defineProps<{
 
 const playing = ref(false);
 
-const play = () => {
-    playing.value = true;
+const play = async () => {
+    state.url = '';
+    document.querySelector('audio')?.pause();
+    state.trackloading = true;
+    state.track = { name: props.name, artist: props.artist, image: props.image, id: props.id };
+    const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${props.id}&token=${state.token}`)).data;
+    state.url = data.url;
 }
 </script>
 
@@ -36,10 +38,6 @@ const play = () => {
 img {
     width: 3rem;
     height: 3rem;
-}
-
-img:hover {
-    filter: brightness(40%);
 }
 
 ion-label {

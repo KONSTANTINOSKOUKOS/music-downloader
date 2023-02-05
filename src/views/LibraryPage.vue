@@ -1,6 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <!-- <MiniPlayer /> -->
       <ion-row>
         <img v-if="state.user.image != ''" :src="state.user.image">
         <h1>{{ state.user.name }}</h1>
@@ -38,6 +39,7 @@ import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, onIonViewWil
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
+import MiniPlayer from "@/components/MiniPlayer.vue";
 import { onMounted, ref } from 'vue';
 import { state } from "@/state";
 import axios from 'axios';
@@ -55,15 +57,19 @@ onIonViewWillEnter(async () => {
   loading.value = true;
   console.log('LibraryPage mounted');
 
-  const user = (await axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`)).data;
-  state.user.name = user.name;
-  state.user.image = user.image ? user.image : '';
-  const trs = (await axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`)).data;
-  state.user.tracks = trs.trs;
-  const pls = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userpls?token=${state.token}`)).data;
-  state.user.playlists = pls.pls;
-  const als = (await axios.get(`https://music-downloader-vercel.vercel.app/api/userals?token=${state.token}`)).data;
-  state.user.albums = als.als;
+  const [user, trs, pls, als] = await Promise.all([
+    axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`),
+    axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`),
+    axios.get(`https://music-downloader-vercel.vercel.app/api/userpls?token=${state.token}`),
+    axios.get(`https://music-downloader-vercel.vercel.app/api/userals?token=${state.token}`)
+  ]);
+
+  state.user.name = user.data.name;
+  state.user.image = user.data.image ? user.data.image : '';
+
+  state.user.tracks = trs.data.trs;
+  state.user.playlists = pls.data.pls;
+  state.user.albums = als.data.als;
 
   loading.value = false;
 });

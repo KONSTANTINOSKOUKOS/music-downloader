@@ -20,4 +20,7 @@ App.addListener('appUrlOpen', e => {
 });
 </script>
 <style scoped>
+MiniPlayer {
+  margin: 100px;
+}
 </style>

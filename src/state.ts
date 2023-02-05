@@ -2,7 +2,6 @@ import { reactive } from "vue";
 
 export interface Track {
     name: string,
-    duration: number,
     id: string,
     artist: string,
     image: string,
@@ -42,5 +41,6 @@ export const state = reactive({
         albums: [] as Album[]
     },
     track: {} as Track,
-    url: ''
+    url: '',
+    trackloading: false
 });
