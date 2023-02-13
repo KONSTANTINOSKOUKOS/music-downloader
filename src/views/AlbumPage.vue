@@ -10,7 +10,8 @@
                 </ion-col>
                 <hr>
                 <ion-list lines="none">
-                    <AlbumTrack v-for="tr in data.tracks" :key="tr.id" :name="tr.name" :id="tr.id" />
+                    <AlbumTrack v-for="tr in data.tracks" :key="tr.id" :name="tr.name" :id="tr.id" :artist="data.artist"
+                        :image="data.image" :duration="tr.duration" />
                 </ion-list>
             </div>
         </ion-content>

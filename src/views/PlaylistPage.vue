@@ -11,7 +11,7 @@
                 <hr>
                 <ion-list lines="none">
                     <TrackComp v-for="tr in data.tracks" :key="tr.id" :artist="tr.artist" :name="tr.name" :id="tr.id"
-                        :image="tr.image" />
+                        :image="tr.image" :duration="tr.duration" />
                 </ion-list>
             </div>
         </ion-content>

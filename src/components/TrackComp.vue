@@ -15,12 +15,16 @@ import { defineProps, ref } from "vue";
 import DlButtonComp from "@/components/Tracks/DlButtonComp.vue";
 import axios from "axios";
 import { state } from "@/state";
+import { FastAverageColor } from "fast-average-color";
 const props = defineProps<{
     name: string,
     artist: string,
     id: string,
-    image: string
+    image: string,
+    duration: number
 }>();
+
+const c = new FastAverageColor();
 
 const playing = ref(false);
 
@@ -28,7 +32,8 @@ const play = async () => {
     state.url = '';
     document.querySelector('audio')?.pause();
     state.trackloading = true;
-    state.track = { name: props.name, artist: props.artist, image: props.image, id: props.id };
+    state.track = { name: props.name, artist: props.artist, image: props.image, id: props.id, duration: props.duration };
+    state.color = (await c.getColorAsync(props.image, { crossOrigin: 'anonymous', algorithm: 'simple' }));
     const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${props.id}&token=${state.token}`)).data;
     state.url = data.url;
 }

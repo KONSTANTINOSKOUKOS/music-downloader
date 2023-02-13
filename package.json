@@ -19,8 +19,9 @@
     "@ionic/vue-router": "^6.0.0",
     "axios": "^1.2.2",
     "core-js": "^3.6.5",
+    "fast-average-color": "^9.3.0",
     "ionicons": "^6.0.3",
-    "vercel": "^28.14.0",
+    "vercel": "^28.15.3",
     "vue": "^3.2.21",
     "vue-router": "^4.1.6"
   },

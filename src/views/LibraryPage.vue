@@ -17,7 +17,7 @@
         <div v-if="cat == 'tracks'">
           <p v-if="state.user.tracks.length == 0">You have no saved tracks in your Spotify account!</p>
           <TrackComp v-else v-for="tr in state.user.tracks" :key="tr.id" :name="tr.name" :artist="tr.artist" :id="tr.id"
-            :image="tr.image" />
+            :image="tr.image" :duration="tr.duration" />
         </div>
         <div v-else-if="cat == 'playlists'">
           <p v-if="state.user.playlists.length == 0">You have no saved playlists in your Spotify account!</p>
@@ -27,7 +27,7 @@
         <div v-else-if="cat == 'albums'">
           <p v-if="state.user.albums.length == 0">You have no saved albums in your Spotify account!</p>
           <AlbumComp v-else @click="nav(`/album?id=${al.id}`)" v-for="al in state.user.albums" :key="al.id"
-            :name="al.name" :artist="al.artist" :id="al.id" :image="al.image" />
+            :name="al.name" :artist="al.artist" :id="al.id" :image="al.image"/>
         </div>
       </ion-list>
     </ion-content>

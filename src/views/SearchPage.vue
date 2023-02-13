@@ -15,7 +15,7 @@
         <ion-list lines="none">
           <div v-if="cat == 'tracks'">
             <TrackComp v-for="tr in data.tracks" :key="tr.id" :name="tr.name" :artist="tr.artist" :id="tr.id"
-              :image="tr.image" />
+              :image="tr.image" :duration="tr.duration" />
           </div>
           <div v-else-if="cat == 'playlists'">
             <PlaylistComp @click="$router.push(`/playlist/?id=${pl.id}`)" v-for="pl in data.playlists" :key="pl.id"

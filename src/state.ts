@@ -1,3 +1,4 @@
+import { FastAverageColorResult } from "fast-average-color";
 import { reactive } from "vue";
 
 export interface Track {
@@ -5,6 +6,7 @@ export interface Track {
     id: string,
     artist: string,
     image: string,
+    duration: number
 }
 
 export interface Playlist {
@@ -42,5 +44,6 @@ export const state = reactive({
     },
     track: {} as Track,
     url: '',
-    trackloading: false
+    trackloading: false,
+    color: {} as FastAverageColorResult
 });
