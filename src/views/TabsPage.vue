@@ -35,7 +35,7 @@
         <ion-label :style="{ color: $route.path == '/library' ? 'white' : '#ffffff80' }">Library</ion-label>
       </button>
     </nav>
-    <MiniPlayer v-if="state.track.id" class="mp"></MiniPlayer>
+    <MiniPlayer v-if="state.track.id"></MiniPlayer>
   </div>
 </template>
 
@@ -50,7 +50,7 @@ import MiniPlayer from '@/components/MiniPlayer.vue';
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 nav {

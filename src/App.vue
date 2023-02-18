@@ -1,6 +1,6 @@
 <template>
   <ion-app class="dark">
-    <ion-router-outlet></ion-router-outlet>
+    <ion-router-outlet ></ion-router-outlet>
     <TabsPage />
   </ion-app>
 </template>
@@ -9,8 +9,6 @@
 <script lang="ts" setup>
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import TabsPage from "@/views/TabsPage.vue";
-import MiniPlayer from "@/components/MiniPlayer.vue";
-import { state } from "@/state";
 import { App } from "@capacitor/app";
 import router from './router';
 
@@ -22,4 +20,8 @@ App.addListener('appUrlOpen', e => {
 });
 </script>
 <style scoped>
+#a {
+  margin-bottom: 0rem;
+  /* for tabs */
+}
 </style>

@@ -1,6 +1,9 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <ion-refresher slot="fixed" @ionRefresh="refresh">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <!-- <MiniPlayer /> -->
       <ion-row>
         <img v-if="state.user.image != ''" :src="state.user.image">
@@ -27,7 +30,7 @@
         <div v-else-if="cat == 'albums'">
           <p v-if="state.user.albums.length == 0">You have no saved albums in your Spotify account!</p>
           <AlbumComp v-else @click="nav(`/album?id=${al.id}`)" v-for="al in state.user.albums" :key="al.id"
-            :name="al.name" :artist="al.artist" :id="al.id" :image="al.image"/>
+            :name="al.name" :artist="al.artist" :id="al.id" :image="al.image" />
         </div>
       </ion-list>
     </ion-content>
@@ -35,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, onIonViewWillEnter } from '@ionic/vue';
+import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, IonRefresher, IonRefresherContent, onIonViewWillEnter } from '@ionic/vue';
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
@@ -44,6 +47,7 @@ import { onMounted, ref } from 'vue';
 import { state } from "@/state";
 import axios from 'axios';
 import router from '@/router';
+import { IonRefresherCustomEvent, RefresherEventDetail } from '@ionic/core';
 
 const cat = ref('tracks');
 const loading = ref(true);
@@ -53,10 +57,8 @@ onMounted(() => {
   state.refresh = localStorage.getItem('refresh') as string;
 });
 
-onIonViewWillEnter(async () => {
+const fetch = async () => {
   loading.value = true;
-  console.log('LibraryPage mounted');
-
   const [user, trs, pls, als] = await Promise.all([
     axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`),
     axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`),
@@ -72,14 +74,28 @@ onIonViewWillEnter(async () => {
   state.user.albums = als.data.als;
 
   loading.value = false;
+}
+
+onMounted(async () => {
+  console.log('LibraryPage mounted');
+  fetch();
 });
 
 const nav = (url: string) => {
   router.push(url);
 }
+
+const refresh = async (e: IonRefresherCustomEvent<RefresherEventDetail>) => {
+  await fetch();
+  e.target.complete();
+}
 </script>
 
 <style scoped>
+ion-list {
+  margin-bottom: 10rem;
+}
+
 ion-row {
   margin: 1rem 1rem;
   display: flex;
