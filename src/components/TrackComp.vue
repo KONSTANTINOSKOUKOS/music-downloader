@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonItem, IonLabel } from "@ionic/vue";
+import { IonItem, IonLabel, toastController } from "@ionic/vue";
 import { defineProps, ref } from "vue";
 import DlButtonComp from "@/components/Tracks/DlButtonComp.vue";
 import axios from "axios";
@@ -34,8 +34,14 @@ const play = async () => {
     state.trackloading = true;
     state.color = (await c.getColorAsync(props.image, { crossOrigin: 'anonymous', algorithm: 'simple' }));
     state.track = { name: props.name, artist: props.artist, image: props.image, id: props.id, duration: props.duration };
-    const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${props.id}&token=${state.token}`)).data;
-    state.url = data.url;
+    try {
+        const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${props.id}&token=${state.token}`)).data;
+        state.url = data.url;
+    } catch (error) {
+        state.trackloading = false;
+        const toast = await toastController.create({ message: 'An error happened during loading. Please click it again.', animated: true, duration: 1700 })
+        await toast.present();
+    }
 }
 </script>
 

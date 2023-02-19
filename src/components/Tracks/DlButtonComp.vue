@@ -1,7 +1,7 @@
 <template>
     <ion-button @click.stop="dlbutton" fill="clear">
-        <svg v-if="!loading" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff"
-            class="bi bi-download" viewBox="0 0 16 16">
+        <svg v-if="!loading" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff" class="bi bi-download"
+            viewBox="0 0 16 16">
             <path
                 d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
             <path
@@ -25,23 +25,28 @@ const loading = ref(false);
 
 const dlbutton = async () => {
     loading.value = true;
-    const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${props.id}&token=${state.token}`)).data;
-    axios.get(data.url, {
-        method: 'GET', responseType: 'blob'
-    }).then(async res => {
-        console.log(res);
-        const url = URL.createObjectURL(new Blob([res.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${props.trackname}.mp3`;
-        link.click();
-        URL.revokeObjectURL(url);
+    try {
+        const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${props.id}&token=${state.token}`)).data;
+        axios.get(data.url, {
+            method: 'GET', responseType: 'blob'
+        }).then(async res => {
+            console.log(res);
+            const url = URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${props.trackname}.mp3`;
+            link.click();
+            URL.revokeObjectURL(url);
+            loading.value = false;
+            const toast = await toastController.create({ message: `${props.trackname} has been saved in your downloads!`, animated: true, duration: 1300 });
+            await toast.present();
+        });
+    } catch (e) {
         loading.value = false;
-        const toast = await toastController.create({ message: `${props.trackname} has been saved in your downloads!`, animated: true, duration: 1300 });
+        const toast = await toastController.create({ message: `Couldn't download ${props.trackname}. Please try again.`, animated: true, duration: 1700 });
         await toast.present();
-    });
+    }
+
 }
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, IonRefresher, IonRefresherContent, onIonViewWillEnter } from '@ionic/vue';
+import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, IonRefresher, IonRefresherContent, onIonViewWillEnter, toastController } from '@ionic/vue';
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
@@ -59,19 +59,26 @@ onMounted(() => {
 
 const fetch = async () => {
   loading.value = true;
-  const [user, trs, pls, als] = await Promise.all([
-    axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`),
-    axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`),
-    axios.get(`https://music-downloader-vercel.vercel.app/api/userpls?token=${state.token}`),
-    axios.get(`https://music-downloader-vercel.vercel.app/api/userals?token=${state.token}`)
-  ]);
+  try {
+    const [user, trs, pls, als] = await Promise.all([
+      axios.get(`https://music-downloader-vercel.vercel.app/api/me?token=${state.token}`),
+      axios.get(`https://music-downloader-vercel.vercel.app/api/usertrs?token=${state.token}`),
+      axios.get(`https://music-downloader-vercel.vercel.app/api/userpls?token=${state.token}`),
+      axios.get(`https://music-downloader-vercel.vercel.app/api/userals?token=${state.token}`)
+    ]);
 
-  state.user.name = user.data.name;
-  state.user.image = user.data.image ? user.data.image : '';
+    state.user.name = user.data.name;
+    state.user.image = user.data.image ? user.data.image : '';
 
-  state.user.tracks = trs.data.trs;
-  state.user.playlists = pls.data.pls;
-  state.user.albums = als.data.als;
+    state.user.tracks = trs.data.trs;
+    state.user.playlists = pls.data.pls;
+    state.user.albums = als.data.als;
+
+  } catch (error) {
+    loading.value = false;
+    const toast = await toastController.create({ message: 'An error happened during loading. Please swipe down to retry.', animated: true, duration: 1700 })
+    await toast.present();
+  }
 
   loading.value = false;
 }

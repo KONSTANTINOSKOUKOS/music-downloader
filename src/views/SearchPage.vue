@@ -22,8 +22,8 @@
               :name="pl.name" :artist="pl.owner" :id="pl.id" :image="pl.image" />
           </div>
           <div v-else-if="cat == 'albums'">
-            <AlbumComp @click="$router.push(`/album/?id=${al.id}`)" v-for="al in data.albums" :key="al.id"
-              :name="al.name" :artist="al.artist" :id="al.id" :image="al.image" />
+            <AlbumComp @click="$router.push(`/album/?id=${al.id}`)" v-for="al in data.albums" :key="al.id" :name="al.name"
+              :artist="al.artist" :id="al.id" :image="al.image" />
           </div>
         </ion-list>
       </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IonPage, IonContent, IonSearchbar, IonList, IonRow, IonChip, IonSpinner } from '@ionic/vue';
+import { IonPage, IonContent, IonSearchbar, IonList, IonRow, IonChip, IonSpinner, toastController } from '@ionic/vue';
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
@@ -55,7 +55,13 @@ const search = async () => {
   if (term.value == '') return;
   loading.value = true;
   const str = encodeURI(term.value.trim());
-  data.value = (await axios.get(`https://music-downloader-vercel.vercel.app/api/search?term=${str}&token=${state.token}`)).data;
+  try {
+    data.value = (await axios.get(`https://music-downloader-vercel.vercel.app/api/search?term=${str}&token=${state.token}`)).data;
+  } catch (e) {
+    loading.value = false;
+    const toast = await toastController.create({ message: 'An error happened during your search. Please try again.', animated: true, duration: 1700 })
+    await toast.present();
+  }
   loading.value = false;
 }
 

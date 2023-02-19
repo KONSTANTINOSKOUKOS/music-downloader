@@ -40,6 +40,10 @@ onIonViewWillEnter(async () => {
 </script>
 
 <style scoped>
+ion-list {
+    margin-bottom: 10rem;
+}
+
 ion-spinner {
     width: 4rem;
     height: 4rem;

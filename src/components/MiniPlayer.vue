@@ -24,7 +24,7 @@
             </ion-item>
             <ion-range
                 :style="{ '--bar-background': state.color.isDark ? changecolor(state.color.hex, 30) : changecolor(state.color.hex, -30) }"
-                @ion-knob-move-end="change" :max="state.track.duration" class="range"></ion-range>
+                @ion-knob-move-end="change" :max="duration" class="range"></ion-range>
         </div>
     </div>
 </template>
@@ -34,6 +34,7 @@ import { IonRangeCustomEvent } from "@ionic/core";
 import { IonRange, IonLabel, IonSpinner, IonItem, IonButton, RangeChangeEventDetail } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 const audio = ref<HTMLAudioElement | null>(null);
+const duration = ref(60);
 //eslint-disable-next-line
 const range = ref<HTMLIonRangeElement | null>(null);
 const playing = ref(false);
@@ -48,6 +49,8 @@ onMounted(() => {
         console.log('playable');
         if (state.trackloading) {
             state.trackloading = false;
+            duration.value = audio.value?.duration as number;
+            console.log(duration.value);
             audio.value?.pause();
             playing.value = false;
             range.value.value = 0;
@@ -77,11 +80,7 @@ const change = async (e: IonRangeCustomEvent<RangeChangeEventDetail>) => {
 }
 
 const changecolor = (hexColor: string, magnitude: number) => {
-    console.log(hexColor);
-    let color = hexColor;
-
     hexColor = hexColor.replace('#', '');
-    // hexColor = hexColor.slice(1);  
     if (hexColor.length === 6) {
         const decimalColor = parseInt(hexColor, 16);
         let r = (decimalColor >> 16) + magnitude;
