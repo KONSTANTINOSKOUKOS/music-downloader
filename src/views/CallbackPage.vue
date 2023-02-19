@@ -1,6 +1,3 @@
-<template>
-    <h1>{{ state.token }}</h1>
-</template>
 <script lang="ts" setup>
 import router from '@/router';
 import { state } from '@/state';

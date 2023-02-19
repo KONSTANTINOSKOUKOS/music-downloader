@@ -44,7 +44,7 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to) => {
-  if (state.token == '') {
+  if (localStorage.getItem('token') == '') {
     if (to.name != 'login' && to.name != 'callback') {//login doesn't need token
       return '/login';
     }

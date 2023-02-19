@@ -55,6 +55,9 @@ const loading = ref(true);
 onMounted(() => {
   state.token = localStorage.getItem('token') as string;
   state.refresh = localStorage.getItem('refresh') as string;
+
+  console.log('LibraryPage mounted');
+  fetch();
 });
 
 const fetch = async () => {
@@ -82,11 +85,6 @@ const fetch = async () => {
 
   loading.value = false;
 }
-
-onMounted(async () => {
-  console.log('LibraryPage mounted');
-  fetch();
-});
 
 const nav = (url: string) => {
   router.push(url);
