@@ -78,8 +78,10 @@ const change = async (e: IonRangeCustomEvent<RangeChangeEventDetail>) => {
 
 const changecolor = (hexColor: string, magnitude: number) => {
     console.log(hexColor);
+    let color = hexColor;
 
-    hexColor = hexColor.replace(`#`, ``);
+    hexColor = hexColor.replace('#', '');
+    // hexColor = hexColor.slice(1);  
     if (hexColor.length === 6) {
         const decimalColor = parseInt(hexColor, 16);
         let r = (decimalColor >> 16) + magnitude;
@@ -120,7 +122,7 @@ ion-label {
     z-index: 99999999;
     padding: 0 .7rem 0 .7rem;
     max-height: 5px;
-    --bar-background: white;
+    /* --bar-background: white; */
     --bar-border-radius: 10rem;
 }
 

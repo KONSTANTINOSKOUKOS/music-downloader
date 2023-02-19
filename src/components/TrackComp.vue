@@ -32,8 +32,8 @@ const play = async () => {
     state.url = '';
     document.querySelector('audio')?.pause();
     state.trackloading = true;
-    state.track = { name: props.name, artist: props.artist, image: props.image, id: props.id, duration: props.duration };
     state.color = (await c.getColorAsync(props.image, { crossOrigin: 'anonymous', algorithm: 'simple' }));
+    state.track = { name: props.name, artist: props.artist, image: props.image, id: props.id, duration: props.duration };
     const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${props.id}&token=${state.token}`)).data;
     state.url = data.url;
 }

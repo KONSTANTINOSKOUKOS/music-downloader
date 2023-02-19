@@ -54,7 +54,7 @@ const cat = ref('tracks');
 const search = async () => {
   if (term.value == '') return;
   loading.value = true;
-  const str = encodeURI(term.value);
+  const str = encodeURI(term.value.trim());
   data.value = (await axios.get(`https://music-downloader-vercel.vercel.app/api/search?term=${str}&token=${state.token}`)).data;
   loading.value = false;
 }
