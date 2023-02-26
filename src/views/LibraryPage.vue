@@ -4,7 +4,6 @@
       <ion-refresher slot="fixed" @ionRefresh="refresh">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <!-- <MiniPlayer /> -->
       <ion-row>
         <img v-if="state.user.image != ''" :src="state.user.image">
         <h1>{{ state.user.name }}</h1>
@@ -38,11 +37,10 @@
 </template>
 
 <script lang="ts" setup>
-import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, IonRefresher, IonRefresherContent, onIonViewWillEnter, toastController } from '@ionic/vue';
+import { IonPage, IonContent, IonRow, IonChip, IonList, IonSpinner, IonRefresher, IonRefresherContent, toastController } from '@ionic/vue';
 import TrackComp from '@/components/TrackComp.vue';
 import PlaylistComp from '@/components/PlaylistComp.vue';
 import AlbumComp from '@/components/AlbumComp.vue';
-import MiniPlayer from "@/components/MiniPlayer.vue";
 import { onMounted, ref } from 'vue';
 import { state } from "@/state";
 import axios from 'axios';

@@ -22,7 +22,6 @@ onMounted(async () => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        console.log(JSON.stringify(res) + '\n' + res.data.access_token + '\n' + res.data.refresh_token);
 
         localStorage.setItem('token', res.data.access_token);
         localStorage.setItem('refresh', res.data.refresh_token);

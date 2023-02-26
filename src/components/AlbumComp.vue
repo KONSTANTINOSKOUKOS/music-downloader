@@ -1,6 +1,6 @@
 <template>
     <ion-item :button="true">
-        <img :src="props.image" alt="">
+        <img :src="props.image">
         <ion-label>
             <h2>{{ props.name }}</h2>
             <h3>{{ props.artist }}</h3>

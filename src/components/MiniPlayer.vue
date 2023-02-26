@@ -1,29 +1,29 @@
 <template>
     <div class="cont">
         <audio :src="state.url"></audio>
-        <div :style="{ backgroundColor: state.color.rgb }" class="item" color="warning">
-            <ion-item lines="none" :color="state.color.rgb">
+        <div id="mini" :style="{ backgroundColor: color.rgb }" class="item" color="warning">
+            <ion-item lines="none" :color="color.rgb">
                 <img :src="state.track.image">
-                <ion-label :style="{ color: state.color.isDark ? 'white' : 'black' }" text-wrap>
+                <ion-label id="label" :style="{ color: color.isDark ? 'white' : 'black' }" text-wrap>
                     <h2>{{ state.track.name }}</h2>
                     <h3>{{ state.track.artist }}</h3>
                 </ion-label>
-                <ion-spinner name="crescent" v-if="state.trackloading"></ion-spinner>
+                <ion-spinner slot="end" name="crescent" v-if="trloading"></ion-spinner>
                 <ion-button fill="clear" color="transparent" slot="end" v-else @click="toggle">
                     <svg v-if="!playing" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                        :fill="state.color.isDark ? 'white' : 'black'" class="bi bi-play-fill" viewBox="0 0 16 16">
+                        :fill="color.isDark ? 'white' : 'black'" class="bi bi-play-fill" viewBox="0 0 16 16">
                         <path
                             d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                     </svg>
                     <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                        :fill="state.color.isDark ? 'white' : 'black'" class="bi bi-pause-fill" viewBox="0 0 16 16">
+                        :fill="color.isDark ? 'white' : 'black'" class="bi bi-pause-fill" viewBox="0 0 16 16">
                         <path
                             d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
                     </svg>
                 </ion-button>
             </ion-item>
             <ion-range
-                :style="{ '--bar-background': state.color.isDark ? changecolor(state.color.hex, 30) : changecolor(state.color.hex, -30) }"
+                :style="{ '--bar-background': !color.hex ? 'white' : color.isDark ? changecolor(color.hex as string, 30) : changecolor(color.hex as string, -30) }"
                 @ion-knob-move-end="change" :max="duration" class="range"></ion-range>
         </div>
     </div>
@@ -31,26 +31,61 @@
 <script lang="ts" setup>
 import { state } from "@/state";
 import { IonRangeCustomEvent } from "@ionic/core";
-import { IonRange, IonLabel, IonSpinner, IonItem, IonButton, RangeChangeEventDetail } from "@ionic/vue";
-import { onMounted, ref } from "vue";
+import { IonRange, IonLabel, IonSpinner, IonItem, IonButton, RangeChangeEventDetail, toastController } from "@ionic/vue";
+import axios from "axios";
+import { FastAverageColor, FastAverageColorResult } from "fast-average-color";
+import { onMounted, ref, watchEffect } from "vue";
 const audio = ref<HTMLAudioElement | null>(null);
-const duration = ref(60);
 //eslint-disable-next-line
 const range = ref<HTMLIonRangeElement | null>(null);
+const label = ref<HTMLHeadingElement | null>(null);
+
+const duration = ref(60);
 const playing = ref(false);
+const trloading = ref(false);
+const color = ref<Partial<FastAverageColorResult>>({});
+
+const c = new FastAverageColor();
+//eslint-disable-next-line
+watchEffect(async () => {
+    if (!audio.value) return;
+
+    color.value = (await c.getColorAsync(state.track.image, { crossOrigin: 'anonymous', algorithm: 'simple' }));
+
+    trloading.value = true;
+    audio.value.src = '';
+    audio.value?.pause();
+
+    console.log(state.track.name.length);
+
+    if (state.track.name.length >= 70)
+        label.value?.removeAttribute('text-wrap');
+    else
+        label.value?.setAttribute('text-wrap', '');
+
+    try {
+        const data = (await axios.get(`https://music-downloader-vercel.vercel.app/api/dl?id=${state.track.id}&token=${state.token}`)).data;
+        audio.value.src = data.url;
+    } catch (e) {
+        trloading.value = false;
+        const toast = await toastController.create({ message: 'An error happened during loading. Please click it again.', animated: true, duration: 1700 })
+        await toast.present();
+    }
+});
 
 onMounted(() => {
     audio.value = document.querySelector('audio');
     range.value = document.querySelector('ion-range');
+    label.value = document.querySelector('#label');
     if (!audio.value) return;
     if (!range.value) return;
     audio.value.oncanplaythrough = () => {
         if (!range.value) return; // mandatory for eslint
         console.log('playable');
-        if (state.trackloading) {
-            state.trackloading = false;
+        if (trloading.value) {
+            trloading.value = false;
+            console.log(audio.value?.duration);
             duration.value = audio.value?.duration as number;
-            console.log(duration.value);
             audio.value?.pause();
             playing.value = false;
             range.value.value = 0;
@@ -101,6 +136,7 @@ const changecolor = (hexColor: string, magnitude: number) => {
 <style scoped>
 .cont {
     margin-bottom: 3.35rem;
+    max-height: 5rem;
 }
 
 .item {
@@ -115,6 +151,7 @@ const changecolor = (hexColor: string, magnitude: number) => {
 
 ion-label {
     margin-left: 1rem;
+    max-height: fit-content;
 }
 
 .range {

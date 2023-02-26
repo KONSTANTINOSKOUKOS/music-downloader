@@ -30,7 +30,6 @@ const dlbutton = async () => {
         axios.get(data.url, {
             method: 'GET', responseType: 'blob'
         }).then(async res => {
-            console.log(res);
             const url = URL.createObjectURL(new Blob([res.data]));
             const link = document.createElement('a');
             link.href = url;

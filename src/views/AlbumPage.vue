@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import { IonCol, IonList, IonPage, IonContent, IonSpinner, onIonViewWillEnter } from "@ionic/vue";
 import AlbumTrack from "@/components/Tracks/AlbumTrack.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { state, Album } from "@/state";
 import axios from "axios";
 import router from "@/router";

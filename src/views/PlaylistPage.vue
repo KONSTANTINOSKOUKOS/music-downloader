@@ -56,7 +56,6 @@ ion-spinner {
 img {
     width: 7rem;
     height: 7rem;
-    background-color: red;
 }
 
 hr {

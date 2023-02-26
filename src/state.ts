@@ -45,5 +45,5 @@ export const state = reactive({
     track: {} as Track,
     url: '',
     trackloading: false,
-    color: {} as FastAverageColorResult
+    color: {} as FastAverageColorResult,
 });
