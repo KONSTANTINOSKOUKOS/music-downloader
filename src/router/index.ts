@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/',
-    redirect: '/library'
+    redirect: '/login'
   },
   {
     path: '/dl',
