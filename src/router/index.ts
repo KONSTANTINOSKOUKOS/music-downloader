@@ -55,7 +55,7 @@ router.beforeEach((to) => {
   }
 });
 
-router.afterEach((to) => {
+router.afterEach((to) => { 
   if (to.name == 'login' || to.name == 'callback') return;
   state.token = localStorage.getItem('token') as string;
   state.refresh = localStorage.getItem('refresh') as string;

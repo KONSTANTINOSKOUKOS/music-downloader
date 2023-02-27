@@ -4,9 +4,10 @@
       <ion-refresher slot="fixed" @ionRefresh="refresh">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <ion-row>
+      <ion-row class="user">
         <img v-if="state.user.image != ''" :src="state.user.image">
         <h1>{{ state.user.name }}</h1>
+        <button @click="logout">Log out</button>
       </ion-row>
       <ion-row>
         <ion-chip :class="cat == 'tracks' ? 'selected' : ''" @click="cat = 'tracks'" color="light">Tracks</ion-chip>
@@ -92,6 +93,10 @@ const refresh = async (e: IonRefresherCustomEvent<RefresherEventDetail>) => {
   await fetch();
   e.target.complete();
 }
+const logout = () => {
+  localStorage.clear();
+  router.push('/login');
+}
 </script>
 
 <style scoped>
@@ -103,6 +108,10 @@ ion-row {
   margin: 1rem 1rem;
   display: flex;
   align-items: center;
+}
+
+.user {
+  justify-content: space-between;
 }
 
 img {
@@ -130,5 +139,17 @@ ion-spinner {
   height: 4rem;
   margin-left: 40vw;
   margin-top: 30vh;
+}
+
+button {
+  background-color: transparent;
+  color: #2dd36f;
+  font-size: 1.2em;
+  padding: .3rem .7rem;
+  border-radius: 2rem;
+  text-align: center;
+}
+button:active{
+  background-color: #121212;
 }
 </style>
