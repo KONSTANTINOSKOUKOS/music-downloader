@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/',
-    redirect: '/dl'
+    redirect: '/library'
   },
   {
     path: '/dl',
@@ -44,8 +44,11 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to) => {
-  if (localStorage.getItem('token') == '' || !localStorage.getItem('token')) {//if empty string || no register
+  const notoken = localStorage.getItem('token') == '' || !localStorage.getItem('token');
+  if (to.path == '/' && notoken)
+    return '/login';
 
+  if (notoken) {//if empty string || no register
     if (to.name != 'login' && to.name != 'callback') {//login doesn't need token
       return '/login';
     }
